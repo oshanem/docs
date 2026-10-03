@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NextUp Post Generator</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <span class="brand">NEXT<span>UP</span></span>
+    <span class="tag">Post generator</span>
+  </header>
+
+  <main class="layout">
+    <form id="form" class="panel" novalidate>
+      <h1>Create a post</h1>
+      <div id="config-warning" class="notice" hidden>
+        The server has no OpenAI API key configured. Set <code>OPENAI_API_KEY</code> and restart.
+      </div>
+
+      <label class="field">
+        <span>Artist image</span>
+        <label class="dropzone" id="dropzone">
+          <input type="file" id="artistImage" name="artistImage" accept="image/png,image/jpeg,image/webp" required />
+          <img id="uploadPreview" alt="" hidden />
+          <span id="dropText">Click or drop a PNG, JPEG, or WEBP (max 20 MB)</span>
+        </label>
+      </label>
+
+      <label class="field">
+        <span>Post type</span>
+        <select id="postType" name="postType" required></select>
+      </label>
+
+      <label class="field">
+        <span>Artist name <em>(optional)</em></span>
+        <input id="artistName" name="artistName" maxlength="80" placeholder="e.g. Ayra Starr" />
+      </label>
+
+      <label class="field">
+        <span>Headline</span>
+        <input id="headline" name="headline" maxlength="140" required placeholder="e.g. Debut album drops Friday" />
+      </label>
+
+      <label class="field">
+        <span>Story information</span>
+        <textarea id="story" name="story" rows="5" maxlength="1200" required
+          placeholder="Key facts, context, mood, and anything the visual should reflect."></textarea>
+      </label>
+
+      <label class="field">
+        <span>Format</span>
+        <select id="size" name="size"></select>
+      </label>
+
+      <button type="submit" id="generate">Generate</button>
+      <p id="error" class="error" role="alert" hidden></p>
+    </form>
+
+    <section class="panel preview">
+      <h2>Preview</h2>
+      <div id="stage" class="stage">
+        <p id="placeholder" class="muted">Your generated NextUp image appears here.</p>
+        <div id="spinner" class="spinner" hidden><div></div><p>Generating with OpenAI… this can take up to a minute.</p></div>
+        <img id="result" alt="Generated NextUp post" hidden />
+      </div>
+      <div class="actions" id="actions" hidden>
+        <a id="download" class="button secondary" download="nextup-post.png">Download PNG</a>
+      </div>
+      <details id="promptDetails" hidden>
+        <summary>Master prompt sent to OpenAI</summary>
+        <pre id="promptText"></pre>
+      </details>
+    </section>
+  </main>
+
+  <script src="app.js" type="module"></script>
+</body>
+</html>
